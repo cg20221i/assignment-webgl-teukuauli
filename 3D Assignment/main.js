@@ -323,10 +323,10 @@ function main() {
         2.3, 2.5, -1,      1, 0, 0, 0, 1, 0,   // Index:  252
         2.3, 2.5, 0,       1, 0, 0, 0, 1, 0, // Index:  253
 
-        // 3.4,  3, -1,       1, 0, 0, 0, 1, 0,   // Index:  254    
-        // 3.4,  3, 0,        1, 0, 0, 0, 1, 0,   // Index:  255
-        // 2.3, 3, 0,        1, 0, 0, 0, 1, 0,   // Index:  256
-        // 2.3, 3, -1,       1, 0, 0, 0, 1, 0, // Index:  257
+        3.4,  3, -1,       1, 0, 0, 0, 1, 0,   // Index:  254    
+        3.4,  3, 0,        1, 0, 0, 0, 1, 0,   // Index:  255
+        2.3, 3, 0,        1, 0, 0, 0, 1, 0,   // Index:  256
+        2.3, 3, -1,       1, 0, 0, 0, 1, 0, // Index:  257
 
         3.4,  1.6, -1,        1, 0, 0, 0, 1, 0,   // Index:  258    
         3.4,  2.5, -1,        1, 0, 0, 0, 1, 0,   // Index:  259
@@ -358,10 +358,12 @@ function main() {
         3,  2.1, 0,        1, 0, 0, 0, 1, 0,   // Index:  280
         2.3,  2.1, 0,        1, 0, 0, 0, 1, 0, // Index:  281
 
-        // 3,  2.1, 0,         1, 0, 0, 0, 1, 0,   // Index:  282    
-        // 3,  2.1, -1,        1, 0, 0, 0, 1, 0,   // Index:  283
-        // 2.3,  2.1, -1,        1, 0, 0, 0, 1, 0,   // Index:  284
-        // 2.3,  2.1, 0,         1, 0, 0, 0, 1, 0, // Index:  285
+        3,  2.1, 0,         1, 0, 0, 0, 1, 0,   // Index:  282    
+        3,  2.1, -1,        1, 0, 0, 0, 1, 0,   // Index:  283
+        2.3,  2.1, -1,        1, 0, 0, 0, 1, 0,   // Index:  284
+        2.3,  2.1, 0,         1, 0, 0, 0, 1, 0, // Index:  285
+
+       
 
         //r
         3,  2.1, -1,        1, 0, 0, 0, 1, 0,   // Index:  286    
@@ -565,13 +567,16 @@ function main() {
         312,313,314, 312,314,315,
         316,317,318, 316,318,319,
         320,321,322, 320,322,323,
-
         324,325,326, 324,326,327,
         328,329,330, 328,330,331,
+        
         332,333,334, 332,334,335,
         336,337,338, 336,338,339,
         340,341,342, 340,342,343,
         344,345,346, 344,346,347,
+        348,349,350, 348,350,351,
+        352,353,354, 352,354,355,
+        356,357,358, 356,358,359,
 
         
 
@@ -712,7 +717,7 @@ function main() {
     // Ambient
     var uAmbientIntensity = gl.getUniformLocation(shaderProgram, "uAmbientIntensity");
     gl.uniform3fv(uLightConstant, [1.0, 1.0, 1.0]);   // white color
-    gl.uniform1f(uAmbientIntensity, 0.142);             // 60% intensity
+    gl.uniform1f(uAmbientIntensity, 0.442);             // 60% intensity
     // Diffuse
     var uLightPosition = gl.getUniformLocation(shaderProgram, "uLightPosition");
     gl.uniform3fv(uLightPosition, [-1.0, -1.0, -2.0]);
@@ -778,6 +783,37 @@ function main() {
             case 65: // Object LEFT
                 direction = "left";
                 break;
+
+                case 73: // Object UP
+                direction = "up";
+                break;
+            case 75: // Object Down
+                direction = "down";
+                break;
+           case 74:
+       
+               camera[0] += 0.05;
+                gl.uniform3fv(uViewerPosition, camera);
+                glMatrix.mat4.lookAt(
+                    view,
+                    camera,
+                    [camera[0], 0.0, -10.0],
+                    [0.0, 1.0, 0.0]
+                );
+                gl.uniformMatrix4fv(uView, false, view);
+               break;
+           case 76:
+               camera[0] -= 0.05;
+               gl.uniform3fv(uViewerPosition, camera);
+               glMatrix.mat4.lookAt(
+                   view,
+                   camera,
+                   [camera[0], 0.0, -10.0],
+                   [0.0, 1.0, 0.0]
+               );
+               gl.uniformMatrix4fv(uView, false, view);
+               break;
+
             case 38: // Camera UP
                 camera[1] += 1;
                 gl.uniform3fv(uViewerPosition, camera);
